@@ -9,7 +9,7 @@ public class WereWolf {
 
  public static void main(String[] args) {
         try {
-               Socket soc = new Socket(InetAddress.getByName("werewolf.sylvainboussignac.ovh"), 80 ); 
+               Socket soc = new Socket(InetAddress.getByName("werewolf.sylvainboussignac.ovh"), 4444 );
                System.out.println("Adresse de l'hôte distant : " + soc.getInetAddress().getHostAddress());
                System.out.println("Réussi" );
                
