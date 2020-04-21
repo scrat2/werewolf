@@ -3,8 +3,8 @@ Request_Name	|Data sended|
 
 Client Request
 
-Create			|players_NB|
-Join			|Room|
+Create			|create_players_NB|
+Join			|join_Room|
 Cupidon			|Room_Action_Pseudo1_Pseudo2|
 Werewolf		|Room_Action_Pseudo|
 Hunter			|Room_Action_Pseudo|
