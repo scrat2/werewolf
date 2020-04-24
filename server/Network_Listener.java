@@ -3,8 +3,12 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class Network_Listener {
+
+    //Room container
+    private static ArrayList roomContainer = new ArrayList();
 
     public static void main(String[] args) {
         //create sockets
@@ -33,7 +37,7 @@ public class Network_Listener {
                 //Create a new room
                 if (enterRequestContent.contains("create")){
                     int numbPlayer = Integer.parseInt(enterRequestContent.substring(7));
-                    create(numbPlayer);
+                    create(numbPlayer, client);
                 }
                 //Join an existing room
                 else if (enterRequestContent.contains("join")){
@@ -46,7 +50,7 @@ public class Network_Listener {
                 }
 
                 //Answer
-                answer("received 5/5", client);
+                //answer("received 5/5", client);
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -80,7 +84,7 @@ public class Network_Listener {
         return response;
     }
 
-    //answer to the client
+    //answers to the client
     private static void answer(String answerContent, Socket client){
         try {
             PrintWriter answer = new PrintWriter(client.getOutputStream(), true);
@@ -94,11 +98,28 @@ public class Network_Listener {
         }
     }
 
-    private static void create(int numbPlayer){
-        System.out.println("Now I will create a new room to play with " + numbPlayer + " players");
+    //This method is called when someone asks to create a Room
+    private static void create(int numbPlayer, Socket client){
+        //Create the player character
+        WerewolfClient wc = new WerewolfClient(client);
+        int roomNumber = generate();
+        //Create the new Room to play
+        Room room = new Room(numbPlayer, roomNumber, wc);
+        //Add the new room in a list during the game
+        roomContainer.add(room);
+        String answerContent = "Now I will create a new room to play with " + numbPlayer + " players room is available at number " + roomNumber;
+        answer(answerContent, client);
     }
 
+    //This method is called when someone asks to join a Room
     private static void join(int room){
+
         System.out.println("Now I will join the room " + room + " to play");
+    }
+
+    //Generates a random number for the Room ID
+    private static int generate(){
+        int number = 100 + (int)(Math.random() * 100);
+        return number;
     }
 }
