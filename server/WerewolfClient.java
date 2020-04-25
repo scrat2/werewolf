@@ -13,4 +13,8 @@ public class WerewolfClient {
     public WerewolfClient(Socket soc) {
         this.soc = soc;
     }
+
+    public Socket getSoc() {
+        return soc;
+    }
 }
