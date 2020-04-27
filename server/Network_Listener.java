@@ -33,16 +33,19 @@ public class Network_Listener {
                 //Connection received and read request
                 String enterRequestContent = com.read(client);
                 System.out.println(enterRequestContent);
+                String request[] = enterRequestContent.split("_");
 
                 //Create a new room
-                if (enterRequestContent.contains("create")){
-                    int numbPlayer = Integer.parseInt(enterRequestContent.substring(7));
-                    create(numbPlayer, client);
+                if (request[0].equals("create")){
+                    int numbPlayer = Integer.parseInt(request[1]);
+                    String pseudo = request[2];
+                    create(numbPlayer, client, pseudo);
                 }
                 //Join an existing room
-                else if (enterRequestContent.contains("join")){
-                    int room = Integer.parseInt(enterRequestContent.substring(5));
-                    join(room, client);
+                else if (request[0].equals("join")){
+                    int room = Integer.parseInt(request[1]);
+                    String pseudo = request[2];
+                    join(room, client, pseudo);
                 }
                 //Reject wrongs requests
                 else {
@@ -68,9 +71,9 @@ public class Network_Listener {
     }
 
     //This method is called when someone asks to create a Room
-    private static void create(int numbPlayer, Socket client){
+    private static void create(int numbPlayer, Socket client, String pseudo){
         //Create the player character
-        WerewolfClient player = new WerewolfClient(client);
+        WerewolfClient player = new WerewolfClient(client, pseudo);
         int roomNumber = generate();
         //Create the new Room to play
         Room room = new Room(numbPlayer, roomNumber, player);
@@ -81,9 +84,9 @@ public class Network_Listener {
     }
 
     //This method is called when someone asks to join a Room
-    private static void join(int room, Socket client){
+    private static void join(int room, Socket client, String pseudo){
         boolean exist = false;
-        WerewolfClient player = new WerewolfClient(client);
+        WerewolfClient player = new WerewolfClient(client, pseudo);
         for (int i=0; i<roomContainer.size(); i++){
             Room tmp = (Room) roomContainer.get(i);
             if (tmp.getRoomNumber() == room){

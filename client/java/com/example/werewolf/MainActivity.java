@@ -1,0 +1,37 @@
+package com.example.werewolf;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.Manifest;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        Button create = findViewById(R.id.create_button);
+        create.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent create = new Intent(MainActivity.this, CreateActivity.class);
+                startActivity(create);
+            }
+        });
+
+        Button join = findViewById(R.id.join_button);
+        join.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent join = new Intent(MainActivity.this, JoinActivity.class);
+                startActivity(join);
+            }
+        });
+    }
+}
