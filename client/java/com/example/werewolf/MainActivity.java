@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+//First interface
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -16,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Run the create activity
         Button create = findViewById(R.id.create_button);
         create.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -25,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //Run the join activity
         Button join = findViewById(R.id.join_button);
         join.setOnClickListener(new View.OnClickListener() {
             @Override

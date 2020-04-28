@@ -9,23 +9,35 @@ import java.util.concurrent.Exchanger;
 
 public class Communication implements Runnable {
     private static Socket soc;
-    private static Exchanger exchange;
+    private Exchanger exchange;
+    private String request;
 
-    public Communication(Exchanger ex){
+    //Constructor to send a request
+    public Communication(Exchanger ex, String request){
         exchange = ex;
+        this.request = request;
     }
 
-    public void run() {
+    //Constructor to read only a request
+    public Communication(Exchanger exchange) {
+        this.exchange = exchange;
+    }
 
+    //This method will be run with a new thread
+    public void run() {
         try {
 
+            //Create socket to communicate with the server
+            soc = new Socket(InetAddress.getByName("werewolf.sylvainboussignac.ovh"), 4444);
 
-            String sendRequest ="";
+            //Check which constructor has been used and in case of needing send the request
+            if (request != null) {
+                answer(request);
+            }
 
-            soc = new Socket(InetAddress.getByName("werewolf.sylvainboussignac.ovh"), 4444); //Connection to the server "werewolf.sylvainboussignac.ovh" on the port 4444
-            sendRequest = (String) exchange.exchange(sendRequest);
-            answer(sendRequest);
+            //Read the request from the server and send it to the caller
             exchange.exchange(read());
+
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
             e.getMessage();

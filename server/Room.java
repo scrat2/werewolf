@@ -1,5 +1,5 @@
 //Contains all the players during the game
-public class Room {
+public class Room implements Runnable{
     //Room data
     private  int roomNumber;
     private int playerNumb;
@@ -28,7 +28,7 @@ public class Room {
     public void join(WerewolfClient player){
         playerTab[activePlayer] = player;
         activePlayer++;
-        com.answer("You join the room successfully", player.soc);
+        com.answer("success_"+playerNumb+"_"+activePlayer, player.soc);
     }
 
     //Check if the room is full
@@ -38,6 +38,22 @@ public class Room {
         }
         else {
             return false;
+        }
+    }
+
+    //Doesn't work yet
+    //Should send the player list and the beginning signal when the room is full
+    @Override
+    public void run() {
+        for(int i=0;i<activePlayer;i++) {
+            for (int j = 0; j < activePlayer; i++) {
+                com.answer(playerTab[j].pseudo, playerTab[i].soc);
+            }
+        }
+        if (full()){
+            for (int i = 0; i<playerNumb;i++){
+                com.answer("start",playerTab[i].soc);
+            }
         }
     }
 }

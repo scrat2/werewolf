@@ -1,6 +1,6 @@
 import java.net.Socket;
 
-//Contains player information
+//Contains player data
 public class WerewolfClient {
     //Client data
     Socket soc;
