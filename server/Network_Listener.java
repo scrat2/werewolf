@@ -1,13 +1,15 @@
-import java.io.BufferedInputStream;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 
+//Main method run in an infinite loop to listen the network
 public class Network_Listener {
-    //Create request reader and answerer
-    private static BufferedInputStream enterRequest = null;
-    private static PrintWriter answer = null;
+
+    //Room container
+    private static ArrayList roomContainer = new ArrayList();
+    //communicator
+    private static Communication com = new Communication();
 
     public static void main(String[] args) {
         //create sockets
@@ -30,21 +32,37 @@ public class Network_Listener {
                 client = server.accept();
 
                 //Connection received and read request
-                System.out.println("Client connection received.");
-                System.out.println("Client IP : "+ client.getInetAddress());
-                enterRequest = new BufferedInputStream(client.getInputStream());
-                String enterRequestContent = read();
+                String enterRequestContent = com.read(client);
                 System.out.println(enterRequestContent);
+                String request[] = enterRequestContent.split("_");
 
-                //answer to this request
-                answer = new PrintWriter(client.getOutputStream(), true);
-                answer.write("reçu 5/5");
-                answer.flush();
-                System.out.println("réponse correctement envoyé");
+                //Create a new room
+                if (request[0].equals("create")){
+                    int numbPlayer = Integer.parseInt(request[1]);
+                    String pseudo = request[2];
+                    create(numbPlayer, client, pseudo);
+                }
+
+                //Join an existing room
+                else if (request[0].equals("join")){
+                    int room = Integer.parseInt(request[1]);
+                    String pseudo = request[2];
+                    join(room, client, pseudo);
+                }
+
+                //Reject wrongs requests
+                else {
+                    System.out.println("Invalid request");
+                }
+
             } catch (IOException e) {
                 e.printStackTrace();
                 e.getMessage();
                 System.out.println("error Connexion client.");
+
+            } catch (NumberFormatException e){
+                System.out.println("bad request format");
+                com.answer("please don't modify request", client);
             }
 
             //close the socket to wait an other connection
@@ -57,13 +75,51 @@ public class Network_Listener {
         }
     }
 
-    //Reader method translate byte in string
-    private static String read() throws IOException{
-        String response = "";
-        int stream;
-        byte[] b = new byte[4096];
-        stream = enterRequest.read(b);
-        response = new String(b, 0, stream);
-        return response;
+    //This method is called when someone asks to create a Room
+    private static void create(int numbPlayer, Socket client, String pseudo){
+        //Create the player character
+        WerewolfClient player = new WerewolfClient(client, pseudo);
+        int roomNumber = generate();
+        //Create the new Room to play
+        Room room = new Room(numbPlayer, roomNumber, player);
+        //Add the new room in a list during the game
+        roomContainer.add(room);
+        String answerContent = Integer.toString(roomNumber);
+        com.answer(answerContent, client);
+    }
+
+    //This method is called when someone asks to join a Room
+    private static void join(int room, Socket client, String pseudo){
+        boolean exist = false;
+
+        //Creates the client who sends the request
+        WerewolfClient player = new WerewolfClient(client, pseudo);
+
+        //Check if the room asked exists
+        for (int i=0; i<roomContainer.size(); i++){
+            Room tmp = (Room) roomContainer.get(i);
+
+            //If the room is found
+            if (tmp.getRoomNumber() == room){
+                //Check if the room is full
+                if (!tmp.full()) {
+                    tmp.join(player);
+                }
+                else {
+                    com.answer("the room is full you can't joint this one", client);
+                }
+                exist = true;
+            }
+        }
+        //If the room doesn't exist
+        if (!exist){
+            com.answer("The room doesn't exist", client);
+        }
+    }
+
+    //Generates a random number for the Room ID
+    private static int generate(){
+        int number = 100 + (int)(Math.random() * 100);
+        return number;
     }
 }
