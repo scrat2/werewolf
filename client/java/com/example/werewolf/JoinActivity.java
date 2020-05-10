@@ -64,6 +64,15 @@ public class JoinActivity extends Activity {
                     GameVariables.setNbPlayer(Integer.parseInt(sAnswer[1]));
                     GameVariables.setNbActivePlayer(Integer.parseInt(sAnswer[2]));
 
+                    //Run the synchronizer thread to have the player list
+                    Thread sync = new Thread(new Synchronizer());
+                    sync.start();
+                    try {
+                        sync.join();
+                    }catch (InterruptedException e){
+                        e.printStackTrace();
+                    }
+
                     //Run the waiting activity
                     Intent Waiting = new Intent(JoinActivity.this, WaitingActivity.class);
                     startActivity(Waiting);

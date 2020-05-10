@@ -48,4 +48,8 @@ public class GameVariables {
     public static void setPlayerList(player player) {
         playerList.add(player);
     }
+
+    public static void clearPlayerList(){
+        playerList.clear();
+    }
 }

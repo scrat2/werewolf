@@ -6,6 +6,8 @@ import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.util.concurrent.Exchanger;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 public class Communication implements Runnable {
     private static Socket soc;
@@ -36,9 +38,9 @@ public class Communication implements Runnable {
             }
 
             //Read the request from the server and send it to the caller
-            exchange.exchange(read());
+            exchange.exchange(read(), 1, TimeUnit.SECONDS);
 
-        } catch (IOException | InterruptedException e) {
+        } catch (IOException | InterruptedException | TimeoutException e) {
             e.printStackTrace();
             e.getMessage();
         }
