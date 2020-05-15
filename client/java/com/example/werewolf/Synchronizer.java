@@ -23,12 +23,20 @@ public class Synchronizer implements Runnable{
         GameVariables.setNbActivePlayer(0);
         GameVariables.clearPlayerList();
 
-        //Add all the player send by the server to the GameVariable players tab
-        String finalAnswer[] = answer.split("_");
-        for (int i = 0; i< finalAnswer.length; i++) {
-            player tmp = new player(finalAnswer[i]);
-            GameVariables.setPlayerList(tmp);
-            GameVariables.setNbActivePlayer(GameVariables.getNbActivePlayer() + 1);
+        //Check if the game can start or not
+        if (!answer.equals("start")) {
+            //Add all the player send by the server to the GameVariable players tab
+            String finalAnswer[] = answer.split("_");
+            for (int i = 0; i < finalAnswer.length; i++) {
+                player tmp = new player(finalAnswer[i]);
+                GameVariables.setPlayerList(tmp);
+                GameVariables.setNbActivePlayer(GameVariables.getNbActivePlayer() + 1);
+            }
+        }
+
+        //Set the Game status to start to signal the game can start
+        else {
+            GameVariables.setGameStatus(answer);
         }
     }
 }

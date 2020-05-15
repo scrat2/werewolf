@@ -1,7 +1,10 @@
 package com.example.werewolf;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -30,28 +33,42 @@ public class WaitingActivity extends Activity {
         //Fills elements
         title.append(GameVariables.getRoom());
         numberPlayer.append(GameVariables.getNbActivePlayer() + "/" + GameVariables.getNbPlayer());
-        for (int i = 0; i<GameVariables.getNbActivePlayer(); i++){
+        for (int i = 0; i < GameVariables.getNbActivePlayer(); i++) {
             player tmp = GameVariables.getPlayerList().get(i);
             playersList.append("\n" + tmp.pseudo);
         }
 
-        //Button listener
-        refresh.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        //Check if the game can start or not
+        if (!GameVariables.getGameStatus().equals("start")) {
+            //Counter to refresh activity every 2 seconds
+            new CountDownTimer(2000, 1000) {
 
-                //Run the Synchronizer thread
-                Thread sync = new Thread(new Synchronizer());
-                sync.start();
-                try {
-                    sync.join();
-                }catch (InterruptedException e){
-                    e.printStackTrace();
+                //Obligatory
+                public void onTick(long millisUntilFinished) {
                 }
 
-                //Reload this activity
-                recreate();
-            }
-        });
+                //Refresh the activity when the timer is finish
+                public void onFinish() {
+                    //Run the Synchronizer thread
+                    Thread sync = new Thread(new Synchronizer());
+                    sync.start();
+                    //Wait for the end of the thread
+                    try {
+                        sync.join();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    //Refresh the activity
+                    finish();
+                    startActivity(getIntent());
+                    overridePendingTransition(0, 0);
+                }
+            }.start();
+        }
+        //Run the new activity
+        else {
+            Intent play = new Intent(WaitingActivity.this, GameActivity.class);
+            startActivity(play);
+        }
     }
 }
