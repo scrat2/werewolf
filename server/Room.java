@@ -1,5 +1,5 @@
 //Contains all the players during the game
-public class Room implements Runnable{
+public class Room {
     //Room data
     private  int roomNumber;
     private int playerNumb;
@@ -24,6 +24,10 @@ public class Room implements Runnable{
         return roomNumber;
     }
 
+    public int getActivePlayer() {
+        return activePlayer;
+    }
+
     //Add a new player in the room
     public void join(WerewolfClient player){
         playerTab[activePlayer] = player;
@@ -41,19 +45,17 @@ public class Room implements Runnable{
         }
     }
 
-    //Doesn't work yet
-    //Should send the player list and the beginning signal when the room is full
-    @Override
-    public void run() {
-        for(int i=0;i<activePlayer;i++) {
-            for (int j = 0; j < activePlayer; i++) {
-                com.answer(playerTab[j].pseudo, playerTab[i].soc);
-            }
+    //Send the player list and the beginning signal when the room is full
+    public String wait_room(){
+        String answer = "";
+        for (int j = 0; j < activePlayer; j++) {
+            answer += playerTab[j].pseudo + "_";
         }
         if (full()){
             for (int i = 0; i<playerNumb;i++){
-                com.answer("start",playerTab[i].soc);
+                answer = "start";
             }
         }
+        return answer;
     }
 }

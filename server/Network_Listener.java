@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class Network_Listener {
 
     //Room container
-    private static ArrayList roomContainer = new ArrayList();
+    private static ArrayList<Room> roomContainer = new ArrayList<Room>();
     //communicator
     private static Communication com = new Communication();
 
@@ -36,23 +36,39 @@ public class Network_Listener {
                 System.out.println(enterRequestContent);
                 String request[] = enterRequestContent.split("_");
 
-                //Create a new room
-                if (request[0].equals("create")){
-                    int numbPlayer = Integer.parseInt(request[1]);
-                    String pseudo = request[2];
-                    create(numbPlayer, client, pseudo);
-                }
+                String pseudo;
+                int room;
+                switch (request[0]){
 
-                //Join an existing room
-                else if (request[0].equals("join")){
-                    int room = Integer.parseInt(request[1]);
-                    String pseudo = request[2];
-                    join(room, client, pseudo);
-                }
+                    //Create a new room
+                    case "create":
+                        int numbPlayer = Integer.parseInt(request[1]);
+                        pseudo = request[2];
+                        create(numbPlayer, client, pseudo);
+                        break;
 
-                //Reject wrongs requests
-                else {
-                    System.out.println("Invalid request");
+                    //Join an existing room
+                    case "join":
+                        room = Integer.parseInt(request[1]);
+                        pseudo = request[2];
+                        join(room, client, pseudo);
+                        break;
+
+                    //Ask to refresh the player list
+                    case "refresh":
+                        room = Integer.parseInt(request[1]);
+                        Room tmp = check_room(room);
+                        if (tmp.getActivePlayer()>0){
+                            //Get the player list and send the result
+                            String answer = tmp.wait_room();
+                            com.answer(answer, client);
+                        }
+                        break;
+
+                    //Reject wrongs requests
+                    default:
+                        System.out.println("Invalid request");
+                        break;
                 }
 
             } catch (IOException e) {
@@ -90,30 +106,25 @@ public class Network_Listener {
 
     //This method is called when someone asks to join a Room
     private static void join(int room, Socket client, String pseudo){
-        boolean exist = false;
-
         //Creates the client who sends the request
         WerewolfClient player = new WerewolfClient(client, pseudo);
 
-        //Check if the room asked exists
-        for (int i=0; i<roomContainer.size(); i++){
-            Room tmp = (Room) roomContainer.get(i);
+        //Creates the temporary room
+        Room tmp = check_room(room);
 
-            //If the room is found
-            if (tmp.getRoomNumber() == room){
-                //Check if the room is full
-                if (!tmp.full()) {
-                    tmp.join(player);
-                }
-                else {
-                    com.answer("the room is full you can't joint this one", client);
-                }
-                exist = true;
+        //Check if the room exist
+        if (tmp.getActivePlayer()>0){
+            //Check if the room is full
+            if (!tmp.full()) {
+                tmp.join(player);
+                tmp.wait_room();
+            }
+            else {
+                com.answer("the room is full you can't joint this one", client);
             }
         }
-        //If the room doesn't exist
-        if (!exist){
-            com.answer("The room doesn't exist", client);
+        else {
+            com.answer("the room doesn't exist", client);
         }
     }
 
@@ -121,5 +132,17 @@ public class Network_Listener {
     private static int generate(){
         int number = 100 + (int)(Math.random() * 100);
         return number;
+    }
+
+    //Check if the room asked exists
+    private static Room check_room(int room){
+        for (int i=0; i<roomContainer.size(); i++){
+            Room tmp = (Room) roomContainer.get(i);
+            //If the room is found
+            if (tmp.getRoomNumber() == room){
+                return tmp;
+            }
+        }
+        return new Room();
     }
 }

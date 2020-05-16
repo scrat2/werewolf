@@ -8,6 +8,7 @@ public class GameVariables {
     private static int nbPlayer;
     private static int nbActivePlayer;
     private static ArrayList<player> playerList = new ArrayList<player>();
+    private static String gameStatus = "sleep"; //Playing or not
 
     public static String getPseudo() {
         return pseudo;
@@ -47,5 +48,17 @@ public class GameVariables {
 
     public static void setPlayerList(player player) {
         playerList.add(player);
+    }
+
+    public static void clearPlayerList(){
+        playerList.clear();
+    }
+
+    public static String getGameStatus() {
+        return gameStatus;
+    }
+
+    public static void setGameStatus(String gameStatus) {
+        GameVariables.gameStatus = gameStatus;
     }
 }

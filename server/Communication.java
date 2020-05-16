@@ -28,7 +28,7 @@ public class Communication {
             PrintWriter answer = new PrintWriter(client.getOutputStream(), true);
             answer.write(answerContent);
             answer.flush();
-            System.out.println("Answer correctly send");
+            System.out.println("Answer correctly send : " + answerContent);
         }catch (IOException e){
             e.printStackTrace();
             e.getMessage();

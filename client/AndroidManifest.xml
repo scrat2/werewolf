@@ -20,11 +20,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+<<<<<<< HEAD
         <activity android:name=".JoinActivity" />
         <activity android:name=".CreateActivity" />
         <activity android:name=".WaitingActivity" />
         <activity android:name=".cupidontest" />
 
+=======
+        <activity android:name=".JoinActivity"/>
+        <activity android:name=".CreateActivity"/>
+        <activity android:name=".WaitingActivity"/>
+        <activity android:name=".GameActivity"/>
+>>>>>>> 8181548af7e4b67292f30bf762d343501780308f
     </application>
 
 </manifest>
