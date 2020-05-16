@@ -36,5 +36,32 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(join);
             }
         });
+
+        Button cupidon = findViewById(R.id.button_cupidon);
+        cupidon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent cupidon = new Intent(MainActivity.this, cupidontest.class);
+                startActivity(cupidon);
+            }
+        });
+
+        Button hunter = findViewById(R.id.button_hunter);
+        hunter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent hunter = new Intent(MainActivity.this, huntertest.class);
+                startActivity(hunter);
+            }
+        });
+
+        Button witcher = findViewById(R.id.button_witcher);
+        witcher.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent witcher = new Intent(MainActivity.this, witchertest.class);
+                startActivity(witcher);
+            }
+        });
     }
 }
