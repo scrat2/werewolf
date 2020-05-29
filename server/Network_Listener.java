@@ -42,9 +42,15 @@ public class Network_Listener {
 
                     //Create a new room
                     case "create":
-                        int numbPlayer = Integer.parseInt(request[1]);
-                        pseudo = request[2];
-                        create(numbPlayer, client, pseudo);
+                        pseudo = request[1];
+                        int numbPlayer = Integer.parseInt(request[2]);
+                        int numbWolf =  Integer.parseInt(request[3]);
+                        int numbWitch =  Integer.parseInt(request[4]);
+                        int numbSeer =  Integer.parseInt(request[5]);
+                        int numbHunter =  Integer.parseInt(request[6]);
+                        int numbCupidon =  Integer.parseInt(request[7]);
+                        int numbVillager = numbPlayer - numbWolf - numbWitch - numbSeer - numbHunter - numbCupidon;
+                        create(numbPlayer, client, pseudo, numbWolf, numbWitch, numbVillager, numbSeer, numbHunter, numbCupidon);
                         break;
 
                     //Join an existing room
@@ -92,12 +98,12 @@ public class Network_Listener {
     }
 
     //This method is called when someone asks to create a Room
-    private static void create(int numbPlayer, Socket client, String pseudo){
+    private static void create(int numbPlayer, Socket client, String pseudo, int numbWolf, int numbWitch, int numbVillager, int numbSeer, int numbHunter, int numbCupidon){
         //Create the player character
         WerewolfClient player = new WerewolfClient(client, pseudo);
         int roomNumber = generate();
         //Create the new Room to play
-        Room room = new Room(numbPlayer, roomNumber, player);
+        Room room = new Room(numbPlayer, roomNumber, player, numbWolf, numbWitch, numbVillager, numbSeer, numbHunter, numbCupidon);
         //Add the new room in a list during the game
         roomContainer.add(room);
         String answerContent = Integer.toString(roomNumber);
