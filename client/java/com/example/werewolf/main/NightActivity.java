@@ -42,7 +42,7 @@ public class NightActivity extends Activity {
         }
 
         //save local player in a final variable for the next
-        final player me = tmp;
+        final player me = GameVariables.getMe();
 
         //Add the role in the view
         player_role.append(me.role);

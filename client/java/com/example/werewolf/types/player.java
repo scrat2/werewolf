@@ -3,7 +3,7 @@ package com.example.werewolf.types;
 //player object uses to store data about player
 public class player {
     public String pseudo;
-    public String role = "werewolf"; //hard initialized for testing
+    public String role;
 
     public player() {
     }

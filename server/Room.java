@@ -22,10 +22,6 @@ public class Room {
         playerTab = new WerewolfClient[playerNumb];
         playerTab[0] = player;
         activePlayer++;
-        System.out.println("In this room we found : ");
-        for (int i = 0; i<roleList.size(); i++){
-            System.out.println(roleList.get(i));
-        }
     }
 
     public int getRoomNumber() {
@@ -54,14 +50,28 @@ public class Room {
     }
 
     //Send the player list and the beginning signal when the room is full
-    public String wait_room(){
+    public String wait_room(String pseudo){
         String answer = "";
         for (int j = 0; j < activePlayer; j++) {
             answer += playerTab[j].pseudo + "_";
         }
         if (full()){
-            for (int i = 0; i<playerNumb;i++){
-                answer = "start";
+
+
+            //search the player who is asking to send him his role
+            int i = 0;
+            while(!playerTab[i].pseudo.equals(pseudo) && i < playerTab.length){
+                i++;
+            }
+
+            //It is if he is not in the room that should not happen just a precaution
+            if(i >= playerTab.length){
+                answer = "error";
+            }
+            else {
+                //give role when the room is full
+                distribution(i);
+                answer = "start_" + playerTab[i].role;
             }
         }
         return answer;
@@ -87,5 +97,14 @@ public class Room {
         for (int i = 0; i<numbCupidon; i++){
             roleList.add("cupidon");
         }
+    }
+
+    //Role distribution
+    private void distribution(int i){
+        int roleIndex;
+        roleIndex = (int) (Math.random() * roleList.size());
+        System.out.println("we choose the : "+roleIndex);
+        playerTab[i].role = roleList.get(roleIndex);
+        roleList.remove(roleIndex);
     }
 }

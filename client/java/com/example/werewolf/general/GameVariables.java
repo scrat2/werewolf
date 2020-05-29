@@ -13,6 +13,15 @@ public class GameVariables {
     private static String gameStatus = "sleep"; //Playing or not
     private static String[] role = {"cupidon", "seer", "werewolf", "witch"};
     private static int advancement = 0;
+    private static player me;
+
+    public static player getMe() {
+        return me;
+    }
+
+    public static void setMe(String pseudo, String role) {
+        GameVariables.me = new player(pseudo, role);
+    }
 
     public static String getPseudo() {
         return pseudo;

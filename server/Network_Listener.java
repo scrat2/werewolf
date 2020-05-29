@@ -63,10 +63,11 @@ public class Network_Listener {
                     //Ask to refresh the player list
                     case "refresh":
                         room = Integer.parseInt(request[1]);
+                        pseudo = request[2];
                         Room tmp = check_room(room);
                         if (tmp.getActivePlayer()>0){
                             //Get the player list and send the result
-                            String answer = tmp.wait_room();
+                            String answer = tmp.wait_room(pseudo);
                             com.answer(answer, client);
                         }
                         break;
@@ -123,7 +124,7 @@ public class Network_Listener {
             //Check if the room is full
             if (!tmp.full()) {
                 tmp.join(player);
-                tmp.wait_room();
+                //tmp.wait_room(pseudo);
             }
             else {
                 com.answer("the room is full you can't joint this one", client);
