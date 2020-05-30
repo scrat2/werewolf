@@ -38,6 +38,9 @@ public class Network_Listener {
 
                 String pseudo;
                 int room;
+                Room tmp;
+                String target;
+
                 switch (request[0]){
 
                     //Create a new room
@@ -64,12 +67,50 @@ public class Network_Listener {
                     case "refresh":
                         room = Integer.parseInt(request[1]);
                         pseudo = request[2];
-                        Room tmp = check_room(room);
+                        tmp = check_room(room);
                         if (tmp.getActivePlayer()>0){
                             //Get the player list and send the result
                             String answer = tmp.wait_room(pseudo);
                             com.answer(answer, client);
                         }
+                        break;
+
+                    //Play action
+                    case "kill":
+                        room = Integer.parseInt(request[1]);
+                        tmp = check_room(room);
+                        target = request[2];
+                        tmp.kill(target);
+                        break;
+
+                    case "watch":
+                        room = Integer.parseInt(request[1]);
+                        tmp = check_room(room);
+                        pseudo = request[2];
+                        target = request[3];
+                        tmp.watch(pseudo, target);
+                        break;
+
+                    case "vote":
+                        room = Integer.parseInt(request[1]);
+                        tmp = check_room(room);
+                        target = request[2];
+                        tmp.vote(target);
+                        break;
+
+                    case "save":
+                        room = Integer.parseInt(request[1]);
+                        tmp = check_room(room);
+                        target = request[2];
+                        tmp.save(target);
+                        break;
+
+                    case "love":
+                        room = Integer.parseInt(request[1]);
+                        tmp = check_room(room);
+                        String target1 = request[2];
+                        String target2 = request[3];
+                        tmp.love(target1, target2);
                         break;
 
                     //Reject wrongs requests

@@ -8,6 +8,7 @@ public class Room {
     private int activePlayer = 0;
     private WerewolfClient[] playerTab;
     private ArrayList<String> roleList = new ArrayList<String>();
+    private ArrayList<Integer> voteList = new ArrayList<>();
     //communicator
     private Communication com = new Communication();
 
@@ -24,6 +25,7 @@ public class Room {
         activePlayer++;
     }
 
+    //Getter
     public int getRoomNumber() {
         return roomNumber;
     }
@@ -57,24 +59,28 @@ public class Room {
         }
         if (full()){
 
-
-            //search the player who is asking to send him his role
-            int i = 0;
-            while(!playerTab[i].pseudo.equals(pseudo) && i < playerTab.length){
-                i++;
-            }
+            int playerIndex = find_player(pseudo);
 
             //It is if he is not in the room that should not happen just a precaution
-            if(i >= playerTab.length){
+            if(playerIndex >= playerTab.length){
                 answer = "error";
             }
             else {
                 //give role when the room is full
-                distribution(i);
-                answer = "start_" + playerTab[i].role;
+                distribution(playerIndex);
+                answer = "start_" + playerTab[playerIndex].role;
             }
         }
         return answer;
+    }
+
+    //search the player who is asking to send him his role
+    private int find_player(String pseudo){
+        int i = 0;
+        while(!playerTab[i].pseudo.equals(pseudo) && i < playerTab.length){
+            i++;
+        }
+        return i;
     }
 
     //Create roles list
@@ -106,5 +112,61 @@ public class Room {
         System.out.println("we choose the : "+roleIndex);
         playerTab[i].role = roleList.get(roleIndex);
         roleList.remove(roleIndex);
+    }
+
+    //Action method
+    public void kill(String target){
+        int playerIndex = find_player(target);
+        com.answer("die",playerTab[playerIndex].soc);
+    }
+
+    public void save(String target){
+        int playerIndex = find_player(target);
+        com.answer("save",playerTab[playerIndex].soc);
+    }
+
+    public void love(String target1, String target2){
+        int playerIndex1 = find_player(target1);
+        int playerIndex2 = find_player(target2);
+        com.answer("love_"+playerTab[playerIndex2].pseudo, playerTab[playerIndex1].soc);
+        com.answer("love_"+playerTab[playerIndex1].pseudo, playerTab[playerIndex2].soc);
+    }
+
+    public void watch(String pseudo, String target){
+        int pseudoIndex = find_player(target);
+        int targetIndex = find_player(pseudo);
+        com.answer(playerTab[targetIndex].role, playerTab[pseudoIndex].soc);
+    }
+
+    public void vote(String target){
+        int playerIndex = find_player(target);
+        voteList.add(playerIndex);
+    }
+
+    public void countVote(){
+        int counter = 0;
+        int max = 0;
+        int search;
+        int eliminate = 0;
+        while(!voteList.isEmpty()){
+            search = voteList.get(0);
+            for(int i = 0; i<voteList.size(); i = i){
+                if(search==voteList.get(i)){
+                    counter++;
+                    voteList.remove(i);
+                }
+                else {
+                    i++;
+                }
+            }
+            if (counter > max){
+                eliminate = search;
+                max = counter;
+            }
+            counter = 0;
+        }
+        for(int i = 0; i < playerTab.length; i++){
+            com.answer(playerTab[eliminate].pseudo, playerTab[i].soc);
+        }
     }
 }
