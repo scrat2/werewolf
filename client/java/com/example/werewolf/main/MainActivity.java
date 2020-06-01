@@ -15,10 +15,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.second_page);
 
         //Run the create activity
-        Button create = findViewById(R.id.create_button);
+        Button create = findViewById(R.id.buttonCreate);
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //Run the join activity
-        Button join = findViewById(R.id.join_button);
+        Button join = findViewById(R.id.buttonJoin);
         join.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

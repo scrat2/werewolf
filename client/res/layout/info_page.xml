@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/rounded_info"
+    tools:context=".main.PresentationRoles">
+
+
+    <Button
+        android:id="@+id/Seer"
+        android:layout_width="116dp"
+        android:layout_height="116dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="216dp"
+        android:background="@drawable/ic_seer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/Cupidon"
+        android:layout_width="116dp"
+        android:layout_height="116dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="108dp"
+        android:background="@drawable/ic_cupid"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/Werewolf"
+        android:layout_width="116dp"
+        android:layout_height="116dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="556dp"
+        android:background="@drawable/ic_werewolf"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/Witch"
+        android:layout_width="116dp"
+        android:layout_height="116dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="448dp"
+        android:background="@drawable/ic_witch"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/Hunter"
+        android:layout_width="116dp"
+        android:layout_height="116dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="332dp"
+        android:background="@drawable/ic_hunter"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/Villager"
+        android:layout_width="116dp"
+        android:layout_height="116dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/ic_villager"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="291dp"
+        android:layout_height="113dp"
+        android:layout_marginTop="4dp"
+        android:gravity="center"
+        android:text="Defeating werewolves is his goal. His word is his only power of persuasion to eliminate them. Stay tuned for clues, and identify the culprits."
+        android:textSize="18dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/Villager"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="293dp"
+        android:layout_height="110dp"
+        android:layout_marginTop="112dp"
+        android:gravity="center"
+        android:text="Defeating werewolves is his goal.
+The first night, he designates two lovers. If one dies, the other will follow him to his grave."
+        android:textSize="18dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/Villager"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="295dp"
+        android:layout_height="94dp"
+        android:layout_marginTop="564dp"
+        android:gravity="center"
+        android:text="Defeating the villagers is his goal. During the night werewolves meet to vote who will be eliminated. During the day it should not be exposed."
+        android:textSize="18dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/Villager"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="292dp"
+        android:layout_height="111dp"
+        android:layout_marginTop="452dp"
+        android:gravity="center"
+        android:text="Defeating werewolves is his goal. She wakes up every night and can use one of two potions: healing the werewolf victim, or killing someone."
+        android:textSize="18dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/Villager"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="289dp"
+        android:layout_height="117dp"
+        android:layout_marginTop="332dp"
+        android:gravity="center"
+        android:text="Defeating werewolves is his goal. Its role has a direct impact on the village. When the hunter dies he has the power to bring another player with him to his grave."
+        android:textSize="18dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/Villager"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="289dp"
+        android:layout_height="108dp"
+        android:layout_marginTop="224dp"
+        android:gravity="center"
+        android:text="Defeating werewolves is his goal. Each night she can know the role of a player she has chosen. She must help the villagers without being exposed."
+        android:textSize="18dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/Villager"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

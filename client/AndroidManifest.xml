@@ -11,18 +11,34 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".main.MainActivity">
+
+        <activity android:name=".main.FirstPage">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
         <activity android:name=".main.JoinActivity"/>
+        <activity android:name=".main.MainActivity"/>
         <activity android:name=".main.CreateActivity"/>
+        <activity android:name=".main.CreateActivity2"/>
+        <activity android:name=".main.PresentationRoles"/>
         <activity android:name=".main.WaitingActivity"/>
         <activity android:name=".main.NightActivity"/>
         <activity android:name=".main.DayActivity"/>
+        <activity
+            android:name=".main.Game5"
+            android:screenOrientation="landscape"/>
+        <activity
+            android:name=".main.Game8"
+            android:screenOrientation="landscape"/>
+        <activity
+            android:name=".main.Game10"
+            android:screenOrientation="landscape"/>
         <activity android:name=".types.CupidonActivity"/>
         <activity android:name=".types.HunterActivity"/>
         <activity android:name=".types.SeerActivity"/>

@@ -19,7 +19,7 @@ public class WaitingActivity extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.waiting_panel);
+        setContentView(R.layout.waiting_queue);
 
         //Initiate elements of activity
         TextView title = findViewById(R.id.waiting_room_number);
@@ -63,8 +63,25 @@ public class WaitingActivity extends Activity {
         }
         //Run the new activity
         else {
-            Intent night = new Intent(WaitingActivity.this, NightActivity.class);
-            startActivity(night);
+
+            switch (GameVariables.getNbPlayer()){
+                case 5:
+                    Intent game5 = new Intent(WaitingActivity.this, Game5.class);
+                    startActivity(game5);
+                break;
+
+                case 8:
+                    Intent game8 = new Intent(WaitingActivity.this, Game8.class);
+                    startActivity(game8);
+                break;
+
+                case 10:
+                    Intent game10 = new Intent(WaitingActivity.this, Game10.class);
+                    startActivity(game10);
+                break;
+
+            }
+
         }
     }
 }

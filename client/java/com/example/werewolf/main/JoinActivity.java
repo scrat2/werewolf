@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.werewolf.R;
 import com.example.werewolf.general.Communication;
@@ -24,14 +25,17 @@ public class JoinActivity extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.join_panel);
+        setContentView(R.layout.join_page);
 
         //Initiate elements of activity
         final Exchanger exchange = new Exchanger();
         Button join_validate = findViewById(R.id.join_validate_button);
-        final EditText join_room = findViewById(R.id.join_room_number);
-        final EditText join_pseudo = findViewById(R.id.join_pseudo);
-        final TextView join_answer = findViewById(R.id.join_answer);
+        final EditText join_room = findViewById(R.id.inputCodeGame);
+        final EditText join_pseudo = findViewById(R.id.inputJoinPseudo);
+
+
+
+
 
         //Button listener
         join_validate.setOnClickListener(new View.OnClickListener() {
@@ -85,9 +89,7 @@ public class JoinActivity extends Activity {
                     startActivity(Waiting);
                 }
                 //If the server refuses the join request display why
-                else {
-                    join_answer.append(answer);
-                }
+
             }
         });
     }

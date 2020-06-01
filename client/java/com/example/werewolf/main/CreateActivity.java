@@ -20,25 +20,32 @@ public class CreateActivity extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.create_panel);
+        setContentView(R.layout.create_setting);
 
         //Initiate elements of activity
         final Exchanger exchange = new Exchanger();
         Button create_validate = findViewById(R.id.create_validate_button);
         final EditText create_player_number = findViewById(R.id.create_player_number);
         final EditText create_pseudo = findViewById(R.id.create_pseudo);
-        final EditText wolf_number = findViewById(R.id.create_number_wolf);
-        final EditText witch_number = findViewById(R.id.create_number_witch);
-        final EditText cupidon_number = findViewById(R.id.create_number_cupidon);
-        final EditText hunter_number = findViewById(R.id.create_number_hunter);
-        final EditText seer_number = findViewById(R.id.create_number_seer);
+
+
+        /*Button next = findViewById(R.id.buttonNext);
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int numberOfPlayer = Integer.parseInt(String.valueOf(create_player_number));
+                numberOfPlayer++;
+                startActivity(next);
+            }
+        });*/
+
 
         //Button listener
         create_validate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                //Initiate data
+               //Initiate data
                 String pseudo = "";
                 String sNbPlayer ="";
                 String sNbWolf = "";
@@ -49,11 +56,34 @@ public class CreateActivity extends Activity {
                 int nbPlayer;
                 pseudo += create_pseudo.getText();
                 sNbPlayer += create_player_number.getText();
-                sNbWolf += wolf_number.getText();
+
+                switch (sNbPlayer){
+
+                    case "5":
+                        sNbWolf += "1";
+                        sNbCupidon += "1";
+                        sNbHunter += "1";
+                        sNbSeer += "1";
+                        sNbWitch += "1";
+                    break;
+
+                    case "6":
+                        sNbWolf += "2";
+                        sNbCupidon += "1";
+                        sNbHunter += "1";
+                        sNbSeer += "1";
+                        sNbWitch += "1";
+                        break;
+                }
+
+
+
+
+                /*sNbWolf += wolf_number.getText();
                 sNbCupidon += cupidon_number.getText();
                 sNbHunter += hunter_number.getText();
                 sNbSeer += seer_number.getText();
-                sNbWitch += witch_number.getText();
+                sNbWitch += witch_number.getText();*/
                 nbPlayer = Integer.parseInt(sNbPlayer);
                 player me = new player(pseudo);
 
@@ -78,9 +108,9 @@ public class CreateActivity extends Activity {
                 GameVariables.setNbPlayer(nbPlayer);
                 GameVariables.setNbActivePlayer(1);
 
-                //Run the waiting activity
-                Intent Waiting = new Intent(CreateActivity.this, WaitingActivity.class);
-                startActivity(Waiting);
+                //Run the setting2 activity
+                Intent setting2 = new Intent(CreateActivity.this, WaitingActivity.class);
+                startActivity(setting2);
             }
         });
     }
